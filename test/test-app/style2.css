@@ -1,0 +1,4 @@
+/* test same class name but in different file/module */
+.someClassnameBlah {
+  color: red;
+}

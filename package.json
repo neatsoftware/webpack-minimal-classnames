@@ -1,0 +1,30 @@
+{
+  "name": "webpack-minimal-classnames",
+  "version": "1.0.1",
+  "description": "Generates smallest possible css class names with webpack css-loader",
+  "author": "Garth Poitras <garth22@gmail.com>",
+  "license": "MIT",
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "webpack",
+    "css",
+    "css-modules",
+    "css-loader",
+    "minification"
+  ],
+  "scripts": {
+    "test": "standard --fix && node test/build && mocha test/test.js"
+  },
+  "dependencies": {
+    "strincrement": "^1.0.2"
+  },
+  "devDependencies": {
+    "css-loader": "^1.0.0",
+    "mocha": "^5.2.0",
+    "standard": "^11.0.1",
+    "webpack": "^4.16.5"
+  }
+}
