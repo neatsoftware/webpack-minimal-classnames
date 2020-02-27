@@ -1,5 +1,5 @@
 const { join } = require('path')
-const generateMinimalClassname = require('../')
+const MinimalClassnameGenerator = require('../')
 
 module.exports = {
   mode: 'development',
@@ -18,8 +18,9 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
-              modules: true,
-              getLocalIdent: generateMinimalClassname
+              modules: {
+                getLocalIdent: MinimalClassnameGenerator()
+              }
             }
           }
         ]

@@ -1,26 +1,36 @@
 # Webpack Minimal Classnames
 
-Generates the smallest possible css class names when using css modules with webpack css-loader.  
+Generate small css class names when using css modules with webpack css-loader.  
 Recommended to do only doing during production builds as a minification step.
 
 ### Example
 
 Input:
+
 ```css
-.someLongDescriptiveCssClassName { color: red; }
-.anotherLongDescriptiveCssClassName { color: green; }
+.someLongDescriptiveCssClassName {
+  color: red;
+}
+.anotherLongDescriptiveCssClassName {
+  color: green;
+}
 ```
 
 Output:
+
 ```css
-.a { color: red; }
-.b { color: green; }
+.gGd {
+  color: red;
+}
+._uJ {
+  color: green;
+}
 ```
 
 ### Usage
 
 ```js
-const generateMinimalClassname = require('webpack-minimal-classnames')
+const MinimalClassnameGenerator = require('webpack-minimal-classnames')
 
 {
   test: /\.css$/,
@@ -28,10 +38,20 @@ const generateMinimalClassname = require('webpack-minimal-classnames')
     {
       loader: 'css-loader',
       options: {
-        modules: true,
-        getLocalIdent: generateMinimalClassname
+        modules: {
+          getLocalIdent: MinimalClassnameGenerator()
+        }
       }
     }
   ]
 }
 ```
+
+### Options
+
+**length**  
+default: 3
+
+### Algorithm
+
+Webpack processes files in a non-deterministic async way so the order in which the classname minification is applied is different on every build. This means we can't simply increment a string/number because the output would be different each time (This is how it worked in 1.0). It works by generating a deterministic hash based on the filepath + local classname, shortens to 3 characters, and applies an incrementor incase of collisions.

@@ -1,20 +1,43 @@
-const Strincrement = require('strincrement')
-const ALPHABET_CSS_CLASSNAMES = 'abcefghijklmnopqrstuvwxyzABCEFGHIJKLMNOPQRSTUVWXYZ_' // removed 'd' so 'ad' is never generated and ad-blocked
+const { createHash } = require('crypto')
+const { relative } = require('path')
 
-function CssClassnameGenerator () {
-  const classnameMap = {}
-  const generateClassname = Strincrement(ALPHABET_CSS_CLASSNAMES)
+const CHARACTERS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_'
+const CHARACTERS_LEN = CHARACTERS.length
 
-  return function (context, localIdentName, localName) {
-    const key = context.resourcePath + localName
-    const existing = classnameMap[key]
+function hash(string, length) {
+  const buffer = createHash('md5')
+    .update(string)
+    .digest()
+    .slice(0, length)
 
-    if (existing) return existing
+  let value = ''
+  for (let i = 0, len = buffer.length; i < len; i++) {
+    value += CHARACTERS[buffer.readUInt8(i) % CHARACTERS_LEN]
+  }
+  return value
+}
 
-    const classname = generateClassname()
-    classnameMap[key] = classname
-    return classname
+function MinimalClassnameGenerator(opts = {}) {
+  const CACHE_MAP = {}
+  const CACHE_VALUES = []
+  const { length = 3 } = opts
+
+  return function(context, _, localName) {
+    const filepath = relative(context.rootContext, context.resourcePath)
+    const key = filepath + localName
+    const cached = CACHE_MAP[key]
+    if (cached) return cached
+
+    const baseClassname = hash(key, length)
+    let newClassname = baseClassname
+    let i = 0
+    while (CACHE_VALUES.includes(newClassname)) {
+      newClassname = baseClassname + i++
+    }
+    CACHE_MAP[key] = newClassname
+    CACHE_VALUES.push(newClassname)
+    return newClassname
   }
 }
 
-module.exports = CssClassnameGenerator()
+module.exports = MinimalClassnameGenerator
