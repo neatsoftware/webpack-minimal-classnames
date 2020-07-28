@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const assert = require('assert')
 const pkg = require('../package')
 const output = require('../dist/test-output')

@@ -5,10 +5,7 @@ const CHARACTERS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_'
 const CHARACTERS_LEN = CHARACTERS.length
 
 function hash(string, length) {
-  const buffer = createHash('md5')
-    .update(string)
-    .digest()
-    .slice(0, length)
+  const buffer = createHash('md5').update(string).digest().slice(0, length)
 
   let value = ''
   for (let i = 0, len = buffer.length; i < len; i++) {
@@ -22,7 +19,7 @@ function MinimalClassnameGenerator(opts = {}) {
   const CACHE_VALUES = []
   const { length = 3 } = opts
 
-  return function(context, _, localName) {
+  return function (context, _, localName) {
     const filepath = relative(context.rootContext, context.resourcePath)
     const key = filepath + localName
     const cached = CACHE_MAP[key]

@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "css-loader": "^3.4.2",
-    "flt": "^0.20.0",
-    "webpack": "^4.41.6"
+    "flt": "^0.31.0",
+    "webpack": "^4.44.0"
   }
 }
