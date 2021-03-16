@@ -6,15 +6,13 @@ module.exports = {
   devtool: false,
   entry: join(__dirname, 'test-app/entry.js'),
   output: {
-    path: join(__dirname, '../dist'),
-    filename: 'output.js',
-    libraryTarget: 'commonjs2'
+    library: { type: 'commonjs2' }
   },
   module: {
     rules: [
       {
         test: /\.css$/,
-        loaders: [
+        use: [
           {
             loader: 'css-loader',
             options: {
