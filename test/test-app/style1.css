@@ -1,7 +1,17 @@
-.someClassnameBlah {
+.someLongDescriptiveCssClassName {
+  color: red;
+}
+
+.anotherLongDescriptiveCssClassName {
   color: green;
 }
 
-.fooBarBangBoom {
-  background: pink;
+/* NOTE: This class name naturally produces a hash starting with 'w', which is being used as an excludePatterns test */
+.anotherOne {
+  background: red;
+}
+
+/* NOTE: This class name naturally produces a hash starting with a number, which is being used to test that it's corrected to a legal class name */
+.test123__ {
+  background: green;
 }

@@ -17,7 +17,7 @@ module.exports = {
             loader: 'css-loader',
             options: {
               modules: {
-                getLocalIdent: MinimalClassnameGenerator()
+                getLocalIdent: MinimalClassnameGenerator({ excludePatterns: [/^w/i] })
               }
             }
           }

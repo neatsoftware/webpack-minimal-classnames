@@ -1,7 +1,8 @@
 # Webpack Minimal Classnames
 
 Generate small css class names when using css modules with webpack css-loader.  
-Recommended to do only doing during production builds as a minification step.
+Recommended to do only doing during production builds as a minification step.  
+This differs from simply using css-loader's `[hash:base64:n]` by handling any collisions & allowing to configure excluded names.
 
 ### Example
 
@@ -19,10 +20,10 @@ Input:
 Output:
 
 ```css
-.gGd {
+.v8S {
   color: red;
 }
-._uJ {
+.dyv {
   color: green;
 }
 ```
@@ -31,6 +32,7 @@ Output:
 
 ```js
 const MinimalClassnameGenerator = require('webpack-minimal-classnames')
+const generateMinimalClassname = MinimalClassnameGenerator()
 
 {
   test: /\.css$/,
@@ -39,7 +41,7 @@ const MinimalClassnameGenerator = require('webpack-minimal-classnames')
       loader: 'css-loader',
       options: {
         modules: {
-          getLocalIdent: MinimalClassnameGenerator()
+          getLocalIdent: generateMinimalClassname
         }
       }
     }
@@ -49,9 +51,9 @@ const MinimalClassnameGenerator = require('webpack-minimal-classnames')
 
 ### Options
 
-**length**  
-default: 3
+**length** _(number)_ - Length of generated class names  
+default: 3  
+_If the max number of names is generated for a given length, it will start generating more at an incremented length_
 
-### Algorithm
-
-Webpack processes files in a non-deterministic async way so the order in which the classname minification is applied is different on every build. This means we can't simply increment a string/number because the output would be different each time (This is how it worked in 1.0). It works by generating a deterministic hash based on the filepath + local classname, shortens to 3 characters, and applies an incrementor incase of collisions.
+**excludePatterns** _(RegExp[])_ - Array of regex patterns to exclude generating as a class name  
+_NOTE: Automatically handles illegal css names_
