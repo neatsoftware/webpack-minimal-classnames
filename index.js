@@ -6,7 +6,6 @@ const CHARACTERS_LEN = CHARACTERS.length
 
 function hash(string, length) {
   const buffer = createHash('md5').update(string).digest().slice(0, length)
-
   let value = ''
   for (let i = 0, len = buffer.length; i < len; i++) {
     value += CHARACTERS[buffer.readUInt8(i) % CHARACTERS_LEN]
@@ -25,15 +24,16 @@ function MinimalClassnameGenerator(opts = {}) {
     const cached = CACHE_MAP[key]
     if (cached) return cached
 
-    const baseClassname = hash(key, length)
-    let newClassname = baseClassname
-    let i = 0
-    while (CACHE_VALUES.includes(newClassname)) {
-      newClassname = baseClassname + i++
+    let className = hash(key, length)
+    // Handle any potential collisions
+    let i = length
+    while (CACHE_VALUES.includes(className)) {
+      className = hash(key, ++i)
     }
-    CACHE_MAP[key] = newClassname
-    CACHE_VALUES.push(newClassname)
-    return newClassname
+
+    CACHE_MAP[key] = className
+    CACHE_VALUES.push(className)
+    return className
   }
 }
 

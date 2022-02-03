@@ -23,5 +23,6 @@
     "css-loader": "^6.6.0",
     "flt": "^0.41.0",
     "webpack": "^5.68.0"
-  }
+  },
+  "prettier": "./node_modules/flt/config/prettier.config.js"
 }
