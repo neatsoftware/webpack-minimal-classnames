@@ -1,6 +1,6 @@
 {
   "name": "webpack-minimal-classnames",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Generate small css class names with webpack css-loader",
   "author": "Garth Poitras <garth22@gmail.com>",
   "repository": "https://github.com/neatsoftware/webpack-minimal-classnames",
