@@ -20,10 +20,10 @@ Input:
 Output:
 
 ```css
-.v8S {
+.xDK {
   color: red;
 }
-.dyv {
+.zyv {
   color: green;
 }
 ```
@@ -32,7 +32,11 @@ Output:
 
 ```js
 const MinimalClassnameGenerator = require('webpack-minimal-classnames')
-const generateMinimalClassname = MinimalClassnameGenerator()
+
+const generateMinimalClassname = MinimalClassnameGenerator({
+  length: 3,
+  excludePatterns: [/ad/i]
+})
 
 {
   test: /\.css$/,
@@ -55,5 +59,4 @@ const generateMinimalClassname = MinimalClassnameGenerator()
 default: 3  
 _If the max number of names is generated for a given length, it will start generating more at an incremented length_
 
-**excludePatterns** _(RegExp[])_ - Array of regex patterns to exclude generating as a class name  
-_NOTE: Automatically handles illegal css names_
+**excludePatterns** _(RegExp[])_ - Array of regex patterns to exclude generating as a class name
